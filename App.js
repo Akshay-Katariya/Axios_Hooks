@@ -19,12 +19,7 @@ let App = () => {
 			</Appbar.Header>
 			<View style={styles.container}>
 				<Text>{name}</Text>
-				<Button
-					style={{marginVertical: 10}}
-					mode='contained'
-					onPress={() => {
-						callApi()
-					}}>
+				<Button style={{marginVertical: 10}} mode='contained' onPress={() => callApi()}>
 					Call Api
 				</Button>
 			</View>
