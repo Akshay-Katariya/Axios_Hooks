@@ -1,7 +1,10 @@
+export const responseHandler = (response) => {
+	return response
+}
+
 export const catchHandler = (error) => {
 	if (error.response) {
-		console.log('--------Problem with response--------')
-		console.log(error.response.data)
+		console.log('Problem with response=>', error.response.data)
 		switch (error.response.status) {
 			case 401:
 				alert(`Error${error.response.status}`)
@@ -20,12 +23,12 @@ export const catchHandler = (error) => {
 				break
 		}
 	} else if (error.request) {
-		console.log('Problem with request', error.request)
+		console.log('Problem with request=>', error.request)
 	} else {
-		console.log('Error', error.message)
+		console.log('Error=>', error.message)
 	}
 }
-
-export const responseHandler = (response) => {
-	return response
+export const noInternetHandler = () => {
+	// Create some attractive UI for no internet
+	alert('Please connect to Internet and try again !')
 }
