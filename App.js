@@ -1,33 +1,42 @@
-import React, {useState} from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {Appbar, Button} from 'react-native-paper'
+import React, {useState, useEffect} from 'react'
+import {View, StyleSheet, Text, FlatList, ActivityIndicator, SafeAreaView} from 'react-native'
 import {getUserList} from './src/api/apiInterface'
-import {isObjectDefined, isArrayDefined} from './src/utils/CommonUtil'
+import {isArrayDefined} from './src/utils/CommonUtil'
 
-let App = () => {
-	const [name, setName] = useState('Name:')
+export default App = () => {
+	const [users, setUsers] = useState([])
+	const [isLoading, setLoading] = useState(false)
+
+	useEffect(() => {
+		callApi()
+	}, []) //[] argument is similar to componentDidMount
 
 	let callApi = async () => {
+		setLoading(true)
 		let response = await getUserList()
-		isObjectDefined(response) && isArrayDefined(response.data) ? setName(`Name : ${response.data[0].name}`) : null
+		isArrayDefined(response) ? setUsers(response) : setUsers([])
+		setLoading(false)
+	}
+
+	Item = ({name}) => {
+		return (
+			<View style={styles.item}>
+				<Text style={styles.name}>{name}</Text>
+			</View>
+		)
 	}
 
 	return (
-		<View style={styles.root}>
-			<Appbar.Header>
-				<Appbar.Content title='Axios' />
-			</Appbar.Header>
-			<View style={styles.container}>
-				<Text>{name}</Text>
-				<Button style={{marginVertical: 10}} mode='contained' onPress={() => callApi()}>
-					Call Api
-				</Button>
-			</View>
-		</View>
+		<SafeAreaView style={styles.root}>
+			{isLoading ? <ActivityIndicator style={styles.indicator} /> : null}
+			<FlatList
+				data={users}
+				renderItem={({item}) => <Item name={item.name} />}
+				keyExtractor={(item) => item.id.toString()}
+			/>
+		</SafeAreaView>
 	)
 }
-
-export default App
 
 const styles = StyleSheet.create({
 	root: {
@@ -37,5 +46,17 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	indicator: {
+		marginTop: 40,
+	},
+	item: {
+		backgroundColor: '#f2f2f2',
+		padding: 20,
+		marginVertical: 8,
+		marginHorizontal: 16,
+	},
+	name: {
+		fontSize: 24,
 	},
 })

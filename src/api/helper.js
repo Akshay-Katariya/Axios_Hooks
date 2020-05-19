@@ -1,5 +1,5 @@
 export const responseHandler = (response) => {
-	return response
+	return response.data
 }
 
 export const catchHandler = (error) => {
@@ -28,7 +28,7 @@ export const catchHandler = (error) => {
 		console.log('Error=>', error.message)
 	}
 }
+
 export const noInternetHandler = () => {
-	// Create some attractive UI for no internet
 	alert('Please connect to Internet and try again !')
 }
