@@ -1,6 +1,6 @@
 import axios from 'axios'
 import NetInfo from '@react-native-community/netinfo'
-import {noInternetHandler, catchHandler} from './helper'
+import {noInternetHandler, errorHandler} from './helper'
 
 let isInternetAvailable = false
 
@@ -38,5 +38,5 @@ API.interceptors.request.use(
 // //Add a response interceptor
 API.interceptors.response.use(
 	(response) => response.data,
-	(error) => catchHandler(error)
+	(error) => errorHandler(error)
 )

@@ -2,7 +2,7 @@ export const responseHandler = (response) => {
 	return response.data
 }
 
-export const catchHandler = (error) => {
+export const errorHandler = (error) => {
 	if (error.response) {
 		console.log('Problem with response=>', error.response.data)
 		switch (error.response.status) {
